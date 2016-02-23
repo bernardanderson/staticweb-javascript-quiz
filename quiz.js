@@ -32,7 +32,7 @@ function checkInputs() {
   
   if (heightTextField.validity.valid && charTextField.validity.valid) {
 
-    drawTree();
+    buildTreeObject();
 
   } else {
 
@@ -42,26 +42,35 @@ function checkInputs() {
 }
 
 //
-// Function that draws the tree using the specified character and height from 
-// input fields storing them in the tree object.
+// This builds the tree object and then passes it to the tree function
 //
-function drawTree() {
-
+function buildTreeObject() {
+  
   // Initialize the tree object and keys
   var tree = {
     height: heightTextField.value,
     buildCharacter: charTextField.value
   };
 
+    drawTree(tree);
+
+}
+
+//
+// Function that draws the tree using the specified character and height from 
+// input fields storing them in the tree object.
+//
+function drawTree(treeValues) {
+
   var numberOfChars; // How many non-space chars per line
   var numberOfSideSpaces; // How many spaces left and right of chars
   var lineCharCounter = 0; // Counter to increase the number of chars per line
   var treeLineText = ""; // String to hold the line of chars
-  var maxTreeWidth = 2 * tree.height - 1; // What is the max tree width?
+  var maxTreeWidth = 2 * treeValues.height - 1; // What is the max tree width?
   
   console.clear(); // Clears the console so it looks nice for each tree displayed
 
-  for (var currentHeight = 1; currentHeight <= tree.height; currentHeight++) {
+  for (var currentHeight = 1; currentHeight <= treeValues.height; currentHeight++) {
 
     //Determines the number of build chars on that line
     numberOfChars = currentHeight + lineCharCounter;
@@ -70,7 +79,7 @@ function drawTree() {
     numberOfSideSpaces = (maxTreeWidth - numberOfChars)/2;
     
     treeLineText += " ".repeat(numberOfSideSpaces); //Repeats the space n times on the left
-    treeLineText += tree.buildCharacter.repeat(numberOfChars); //Repeats the char n times
+    treeLineText += treeValues.buildCharacter.repeat(numberOfChars); //Repeats the char n times
     treeLineText += " ".repeat(numberOfSideSpaces); //Repeats the space n times on the right
 
     console.log(treeLineText);
